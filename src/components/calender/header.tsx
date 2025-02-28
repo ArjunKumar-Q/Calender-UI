@@ -77,6 +77,22 @@ const Header = ({
     setDate(new Date());
     viewStateHandler("day");
   }, [setDate, viewStateHandler]);
+
+  const ActiveButton = ({ title }: { title: string }) => {
+    return (
+      <button
+        onClick={() => viewStateHandler(title.toLowerCase())}
+        className={`px-1 capitalize ${
+          view === title.toLocaleLowerCase()
+            ? "border-b-2 border-[#2b7dc9] "
+            : "bg-transparent"
+        }`}
+      >
+        {title}
+      </button>
+    );
+  };
+
   return (
     <>
       <div className="h-20 w-full flex justify-between items-center ">
@@ -135,49 +151,14 @@ const Header = ({
         </div>
 
         <div className=" w-full md:w-fit flex flex-row-reverse justify-between  mb-4 gap-x-5 pb-2">
-          <button
-            onClick={() => viewStateHandler("year")}
-            className={`px-1 ${
-              view === "year"
-                ? "border-b-2 border-[#2b7dc9] "
-                : "bg-transparent"
-            }`}
-          >
-            Year
-          </button>
-          <button
-            onClick={() => viewStateHandler("month")}
-            className={`px-1 ${
-              view === "month"
-                ? "border-b-2 border-[#2b7dc9] "
-                : "bg-transparent"
-            }`}
-          >
-            Month
-          </button>
-          <button
-            onClick={() => viewStateHandler("week")}
-            className={`px-1 ${
-              view === "week"
-                ? "border-b-2 border-[#2b7dc9] "
-                : "bg-transparent"
-            }`}
-          >
-            Week
-          </button>
-          <button
-            onClick={() => viewStateHandler("day")}
-            className={`px-1 ${
-              view === "day" ? "border-b-2 border-[#2b7dc9] " : "bg-transparent"
-            }`}
-          >
-            Day
-          </button>
+          <ActiveButton title="year" />
+          <ActiveButton title="month" />
+          <ActiveButton title="week" />
+          <ActiveButton title="day" />
         </div>
       </div>
     </>
   );
 };
-
 
 export default Header;

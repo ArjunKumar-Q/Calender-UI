@@ -26,7 +26,7 @@ const Week = ({ currentDate }: { currentDate: Date }) => {
     []
   );
 
-  const calculatingEvents = useCallback(
+  const findingEvents = useCallback(
     (day: Date, hour: string) => {
       if (events && events.length > 0) {
         const eventsHeldToday = events.filter(
@@ -90,7 +90,7 @@ const Week = ({ currentDate }: { currentDate: Date }) => {
                 className="border-r px-1 flex items-center justify-start "
                 style={{}}
               >
-                {calculatingEvents(day, hour)}
+                {findingEvents(day, hour)}
               </div>
             ))}
           </div>

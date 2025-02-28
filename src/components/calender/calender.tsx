@@ -18,6 +18,7 @@ export default function Calendar() {
         viewStateHandler={setView}
         setDate={setCurrentDate}
       />
+      
       <div id="calender-body" className="mx-auto overflow-x-auto h-auto">
         {view === "year" && (
           <Year

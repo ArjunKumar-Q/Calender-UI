@@ -1,10 +1,10 @@
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Schedule } from "../types/types";
 import SingleTask from "./SingleTask";
+import { cn } from "@/lib/utils";
 
 import { useState } from "react";
 import { XIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const MultipleTasks = ({
   data,

@@ -1,12 +1,13 @@
 import useFetch from "../hooks/useFetch";
-import { useCallback, useEffect, useState, useMemo } from "react";
 import { Schedule } from "../types/types";
 import MultipleTasks from "../Task/MultipleTasks";
 import SingleTask from "../Task/SingleTask";
 
+import { useCallback, useEffect, useState, useMemo } from "react";
+
 const Day = ({ currentDate }: { currentDate: Date }) => {
   const [events, setEvents] = useState<Schedule[]>([]);
-  const { data } = useFetch("/data/calendar_meeting.json");  
+  const { data } = useFetch("/data/calendarfromtoenddate.json");
 
   const hours = useMemo(
     () =>
@@ -18,7 +19,7 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
     []
   );
 
-  const calculatingEvents = useCallback(
+  const findingEvents = useCallback(
     (hour: string) => {
       if (events && events.length > 0) {
         const eventsHeldToday = events?.filter(
@@ -32,6 +33,8 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
               Number(hour.split(" ")[0])
             : new Date(event.start).getHours() == Number(hour.split(" ")[0])
         );
+
+        console.log(eventsHeldToday, eventsHeldAtThisCurrentTime);
 
         if (eventsHeldAtThisCurrentTime.length > 1) {
           return (
@@ -51,7 +54,16 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
 
   useEffect(() => {
     if (data) {
-      setEvents([data] as Schedule[]);
+      console.log(data);
+      setEvents(() => {
+        if ((data as Schedule[]).length == 1) {
+          return [data] as Schedule[];
+        } else if ((data as Schedule[]).length > 1) {
+          return data as Schedule[];
+        } else {
+          return [];
+        }
+      });
     }
   }, [currentDate, data]);
 
@@ -63,7 +75,7 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
             {hour}
           </div>
           <div className="flex px-3 items-center">
-            {calculatingEvents(hour)}
+            {findingEvents(hour)}
           </div>
         </div>
       ))}
