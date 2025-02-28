@@ -27,6 +27,14 @@ const SingleTask = ({
   IsDayOrWeekView?: boolean;
   height?: string;
 }) => {
+  const event = task;
+  const start = new Date(event.start);
+  const end = new Date(event.end);
+  const duration = (end.getTime() - start.getTime()) / (1000 * 60);
+  const heightu = (duration / 60) * 110;
+
+  console.log("console.log heightu :", heightu);
+
   const deleteTask = useCallback(() => {
     if (deleteHandler) {
       deleteHandler((prev) => prev.filter((t) => t.id !== task.id));
@@ -53,9 +61,9 @@ const SingleTask = ({
         }`}{" "}
         -{" "}
         {`${new Date(task?.end).getHours() % 12}:${
-          !new Date(task?.start).getMinutes()
+          new Date(task?.end).getMinutes() == 0
             ? "00"
-            : new Date(task?.start).getMinutes()
+            : new Date(task?.end).getMinutes()
         }`}{" "}
         {new Date(task?.end).getHours() > 12 ? "PM" : "AM"}
       </span>
@@ -88,31 +96,39 @@ const SingleTask = ({
     }
   );
 
-  console.log(height)
+  console.log(height);
 
   return (
     <Dialog>
       <DialogTrigger
         asChild
-        className={cn("overflow-hidden ", isListItem && "rounded-none border-b")}
+        className={cn(
+          "overflow-hidden ",
+          isListItem && "rounded-none border-b"
+        )}
       >
         <div
           className={cn(
-            "h-16 bg-white  rounded-sm   flex cursor-pointer focus:bg-[#d4effe] mt-1 z-50",
+            "h-16 bg-white  rounded-sm   flex cursor-pointer focus:bg-[#d4effe] mt-1 z-40 hover:z-[9999]",
             isListItem ? " h-28 border " : "h-16 shadow-lg border",
             IsDayOrWeekView && ` w-40 items-center `
           )}
           style={{
             height: height ? height : "auto",
-            alignItems: height && "start"
+            alignItems: height && "start",
           }}
           tabIndex={0}
           id="task"
         >
-          <div className={cn("w-4 h-auto bg-[#2b7dc9] rounded-l-md",IsDayOrWeekView && "h-full")}>&nbsp;</div>
           <div
-            className={cn("flex flex-col gap-y-1  w-11/12 items-start p-2")}
+            className={cn(
+              "w-4 h-auto bg-[#2b7dc9] rounded-l-md",
+              IsDayOrWeekView && "h-full"
+            )}
           >
+            &nbsp;
+          </div>
+          <div className={cn("flex flex-col gap-y-1  w-11/12 items-start p-2")}>
             {isListItem ? (
               <div className="flex justify-between items-center w-full">
                 <span className="text-xs capitalize ">

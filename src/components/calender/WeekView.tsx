@@ -97,7 +97,7 @@ const Week = ({ currentDate }: { currentDate: Date }) => {
             {weekDays.map((day) => (
               <div
                 key={day.getDate()}
-                className="border-r px-1 flex items-center justify-start py-1"
+                className="border-r p-1 flex  "
                 style={{}}
               >
                 {findingEvents(day, hour)}

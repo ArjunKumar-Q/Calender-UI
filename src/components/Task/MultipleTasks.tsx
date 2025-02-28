@@ -16,18 +16,27 @@ const MultipleTasks = ({
   const [tasks, setTasks] = useState([...data]);
   const [open, setOpen] = useState(false);
 
+  const event = tasks[0];
+  const start = new Date(event.start);
+  const end = new Date(event.end);
+  const duration = (end.getTime() - start.getTime()) / (1000 * 60); // To calculate the total duration in minutes
+  const height = (duration / 60) * 110; // To calculate the height of the task
+
   return (
     tasks.length >= 1 && (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger
-          asChild
-          className={cn("rounded-sm")}
-        >
+        <PopoverTrigger asChild className={cn("rounded-sm")}>
           <div
             className={cn(
-              "h-16 w-12/12 bg-white  shadow-lg flex cursor-pointer focus:bg-[#d4effe] mt-1 relative ",
-              IsDayOrWeekView && "h-4/6 w-40 items-center"
+              "h-16  w-12/12 bg-white shadow-lg flex cursor-pointer focus:bg-[#d4effe] mt-1 relative z-50 hover:z-[9999] ",
+              IsDayOrWeekView && "w-40 items-center"
             )}
+            style={{
+              height: IsDayOrWeekView ? `${height}px` : "",
+              marginTop: IsDayOrWeekView
+                ? `${(start.getMinutes() / 60) * 120}px`
+                : "auto",
+            }}
             tabIndex={0}
             id="task"
           >
@@ -35,12 +44,9 @@ const MultipleTasks = ({
               {tasks.length}
             </span>
             <div
-              className={cn(
-                "w-1/12 h-full bg-[#2b7dc9] rounded-l-sm",
-                // IsDayOrWeekView && "rounded-none"
-              )}
+              className={cn("w-1/12 h-full bg-[#2b7dc9] rounded-l-sm")}
             ></div>
-            <div className="flex flex-col gap-y-1  w-11/12 items-start px-2">
+            <div className="flex flex-col gap-y-1 w-11/12 items-start px-2">
               <span className="text-[0.75rem] capitalize">
                 {" "}
                 {tasks[0]?.job_id?.jobRequest_Title}
