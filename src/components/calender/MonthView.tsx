@@ -16,7 +16,7 @@ import { useState, useRef, useEffect } from "react";
 const Month = ({ currentDate }: { currentDate: Date }) => {
   const [events, setEvents] = useState<Schedule[]>([]);
   const taskDates = useRef<string[]>([]);
-  const { data } = useFetch("src/data/calendarfromtoenddate.json");
+  const { data } = useFetch("/data/calendarfromtoenddate.json");
 
   const startDate = startOfWeek(startOfMonth(currentDate));
   const endDate = endOfWeek(endOfMonth(currentDate));

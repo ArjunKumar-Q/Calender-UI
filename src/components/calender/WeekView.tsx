@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const Week = ({ currentDate }: { currentDate: Date }) => {
   const [events, setEvents] = useState<Schedule[]>([]);
-  const { data } = useFetch("src/data/calendarfromtoenddate.json");
+  const { data } = useFetch("/data/calendarfromtoenddate.json");
 
   const weekStart = startOfWeek(currentDate);
   const weekDays = eachDayOfInterval({

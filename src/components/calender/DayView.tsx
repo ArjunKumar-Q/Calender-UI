@@ -6,7 +6,7 @@ import SingleTask from "../Task/SingleTask";
 
 const Day = ({ currentDate }: { currentDate: Date }) => {
   const [events, setEvents] = useState<Schedule[]>([]);
-  const { data } = useFetch("src/data/calendar_meeting.json");
+  const { data } = useFetch("/data/calendar_meeting.json");  
 
   const hours = useMemo(
     () =>
