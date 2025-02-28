@@ -21,7 +21,7 @@ const MultipleTasks = ({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
           asChild
-          className={cn("rounded-md", IsDayOrWeekView && "rounded-none")}
+          className={cn("rounded-sm")}
         >
           <div
             className={cn(
@@ -36,8 +36,8 @@ const MultipleTasks = ({
             </span>
             <div
               className={cn(
-                "w-1/12 h-full bg-[#2b7dc9] rounded-l-md",
-                IsDayOrWeekView && "rounded-none"
+                "w-1/12 h-full bg-[#2b7dc9] rounded-l-sm",
+                // IsDayOrWeekView && "rounded-none"
               )}
             ></div>
             <div className="flex flex-col gap-y-1  w-11/12 items-start px-2">

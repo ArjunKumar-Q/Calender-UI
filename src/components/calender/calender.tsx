@@ -7,7 +7,7 @@ import Day from "./DayView";
 import { useState } from "react";
 
 export default function Calendar() {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [currentDate, setCurrentDate] = useState<Date>(new Date(2024,7,29));
   const [view, setView] = useState<string>("month");
 
   return (
@@ -18,7 +18,7 @@ export default function Calendar() {
         viewStateHandler={setView}
         setDate={setCurrentDate}
       />
-      
+
       <div id="calender-body" className="mx-auto overflow-x-auto h-auto">
         {view === "year" && (
           <Year

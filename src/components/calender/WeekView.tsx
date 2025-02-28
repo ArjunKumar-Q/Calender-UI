@@ -46,8 +46,18 @@ const Week = ({ currentDate }: { currentDate: Date }) => {
             <MultipleTasks data={eventsHeldAtThisCurrentTime} IsDayOrWeekView />
           );
         } else if (eventsHeldAtThisCurrentTime.length === 1) {
+          const event = eventsHeldAtThisCurrentTime[0];
+          const start = new Date(event.start);
+          const end = new Date(event.end);
+          const duration = (end.getTime() - start.getTime()) / (1000 * 60);
+          const height = (duration / 60) * 110;
+
           return (
-            <SingleTask task={eventsHeldAtThisCurrentTime[0]} IsDayOrWeekView />
+            <SingleTask
+              task={eventsHeldAtThisCurrentTime[0]}
+              IsDayOrWeekView
+              height={`${height}px`}
+            />
           );
         } else {
           return <></>;
@@ -79,15 +89,15 @@ const Week = ({ currentDate }: { currentDate: Date }) => {
         {hours.map((hour, index) => (
           <div
             key={index}
-            className="col-span-8 grid grid-cols-8 border-t h-30"
+            className="col-span-8 grid grid-cols-8 border-t relative h-30"
           >
-            <div className="border-r border-l p-2 bg-gray-50 flex justify-center items-end text-[#2b7dc9]">
-              {hour}
+            <div className="border-r p-2 bg-gray-50 flex justify-center items-start text-[#2b7dc9]  ">
+              <span className="absolute -top-6">{hour}</span>
             </div>
             {weekDays.map((day) => (
               <div
                 key={day.getDate()}
-                className="border-r px-1 flex items-center justify-start "
+                className="border-r px-1 flex items-center justify-start py-1"
                 style={{}}
               >
                 {findingEvents(day, hour)}

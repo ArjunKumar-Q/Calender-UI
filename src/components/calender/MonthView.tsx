@@ -31,7 +31,6 @@ const Month = ({ currentDate }: { currentDate: Date }) => {
     }
   }, [data]);
 
-  console.log(taskDates.current, currentDate.toDateString());
 
   return (
     <div className="min-w-7xl">

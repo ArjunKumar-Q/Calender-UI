@@ -19,11 +19,13 @@ const SingleTask = ({
   isListItem = false,
   deleteHandler,
   IsDayOrWeekView = false,
+  height,
 }: {
   task: Schedule;
   isListItem?: boolean;
   deleteHandler?: React.Dispatch<React.SetStateAction<Schedule[]>>;
   IsDayOrWeekView?: boolean;
+  height?: string;
 }) => {
   const deleteTask = useCallback(() => {
     if (deleteHandler) {
@@ -50,9 +52,11 @@ const SingleTask = ({
             : new Date(task?.start).getMinutes()
         }`}{" "}
         -{" "}
-        {`${new Date(task?.end).getHours() % 12}:${new Date(
-          task?.end
-        ).getMinutes()}`}{" "}
+        {`${new Date(task?.end).getHours() % 12}:${
+          !new Date(task?.start).getMinutes()
+            ? "00"
+            : new Date(task?.start).getMinutes()
+        }`}{" "}
         {new Date(task?.end).getHours() > 12 ? "PM" : "AM"}
       </span>
     );
@@ -84,28 +88,34 @@ const SingleTask = ({
     }
   );
 
+  console.log(height)
+
   return (
     <Dialog>
       <DialogTrigger
         asChild
-        className={cn("overflow-hidden", isListItem && "rounded-none border-b")}
+        className={cn("overflow-hidden ", isListItem && "rounded-none border-b")}
       >
         <div
           className={cn(
-            "h-16 bg-white   flex cursor-pointer focus:bg-[#d4effe] mt-1",
-            isListItem ? " h-24 py-2" : "h-16 shadow-lg",
-            IsDayOrWeekView && "h-4/6 w-40 items-center"
+            "h-16 bg-white  rounded-sm   flex cursor-pointer focus:bg-[#d4effe] mt-1 z-50",
+            isListItem ? " h-28 border " : "h-16 shadow-lg border",
+            IsDayOrWeekView && ` w-40 items-center `
           )}
+          style={{
+            height: height ? height : "auto",
+            alignItems: height && "start"
+          }}
           tabIndex={0}
           id="task"
         >
-          <div className="w-1/12 h-full bg-[#2b7dc9]"></div>
+          <div className={cn("w-4 h-auto bg-[#2b7dc9] rounded-l-md",IsDayOrWeekView && "h-full")}>&nbsp;</div>
           <div
-            className={cn("flex flex-col gap-y-1  w-11/12 items-start px-2")}
+            className={cn("flex flex-col gap-y-1  w-11/12 items-start p-2")}
           >
             {isListItem ? (
               <div className="flex justify-between items-center w-full">
-                <span className="text-xs capitalize">
+                <span className="text-xs capitalize ">
                   {" "}
                   {task?.job_id?.jobRequest_Title}
                 </span>

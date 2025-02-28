@@ -41,8 +41,18 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
             <MultipleTasks data={eventsHeldAtThisCurrentTime} IsDayOrWeekView />
           );
         } else if (eventsHeldAtThisCurrentTime.length === 1) {
+          const event = eventsHeldAtThisCurrentTime[0];
+          const start = new Date(event.start);
+          const end = new Date(event.end);
+          const duration = (end.getTime() - start.getTime()) / (1000 * 60);
+          const height = (duration / 60) * 110;
+
           return (
-            <SingleTask task={eventsHeldAtThisCurrentTime[0]} IsDayOrWeekView />
+            <SingleTask
+              task={eventsHeldAtThisCurrentTime[0]}
+              IsDayOrWeekView
+              height={`${height}px`}
+            />
           );
         } else {
           return <></>;
@@ -54,7 +64,6 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setEvents(() => {
         if ((data as Schedule[]).length == 1) {
           return [data] as Schedule[];
@@ -71,12 +80,10 @@ const Day = ({ currentDate }: { currentDate: Date }) => {
     <div className="grid grid-cols-1 border-t mt-4">
       {hours.map((hour, index) => (
         <div key={index} className="border-b text-gray-700 bg-gray-50 flex">
-          <div className="w-40 h-30 border-r flex justify-center items-end text-[#2b7dc9]">
+          <div className="w-40 h-30 border-r flex justify-center items-start text-[#2b7dc9] py-2">
             {hour}
           </div>
-          <div className="flex px-3 items-center">
-            {findingEvents(hour)}
-          </div>
+          <div className="flex px-3 h-30 py-2">{findingEvents(hour)}</div>
         </div>
       ))}
     </div>
